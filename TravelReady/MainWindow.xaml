@@ -1,0 +1,308 @@
+<Window x:Class="TravelReady.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Travel Ready — Packing Atelier" Width="1360" Height="850"
+        MinWidth="1180" MinHeight="720" WindowStartupLocation="CenterScreen"
+        WindowState="Maximized" Background="#F4F1F8" FontFamily="Arial">
+    <Window.Resources>
+        <SolidColorBrush x:Key="Page" Color="#F4F1F8"/>
+        <SolidColorBrush x:Key="Paper" Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="Ink" Color="#2C2334"/>
+        <SolidColorBrush x:Key="Plum" Color="#3D294D"/>
+        <SolidColorBrush x:Key="Coral" Color="#D84C68"/>
+        <SolidColorBrush x:Key="Lilac" Color="#E8E0F1"/>
+        <SolidColorBrush x:Key="Line" Color="#D8CFE1"/>
+        <SolidColorBrush x:Key="Muted" Color="#71667A"/>
+        <SolidColorBrush x:Key="Soft" Color="#F9F7FB"/>
+        <SolidColorBrush x:Key="Snow" Color="#F3EFF8"/>
+
+        <Style TargetType="TextBlock"><Setter Property="Foreground" Value="{StaticResource Ink}"/></Style>
+        <Style x:Key="Command" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource Plum}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="16,9"/>
+            <Setter Property="FontFamily" Value="Arial"/>
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="Button">
+                <Grid SnapsToDevicePixels="True">
+                    <Path x:Name="Surface" Data="M 0,0 L 0.91,0 1,0.22 1,1 0,1 Z"
+                          Stretch="Fill" Fill="{TemplateBinding Background}"/>
+                    <ContentPresenter Margin="{TemplateBinding Padding}"
+                                      HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Grid>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Surface" Property="Opacity" Value="0.82"/></Trigger>
+                    <Trigger Property="IsPressed" Value="True"><Setter TargetName="Surface" Property="Opacity" Value="0.66"/></Trigger>
+                    <Trigger Property="IsEnabled" Value="False"><Setter TargetName="Surface" Property="Opacity" Value="0.45"/></Trigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate></Setter.Value></Setter>
+        </Style>
+        <Style x:Key="TextCommand" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{StaticResource Plum}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource Line}"/>
+            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+            <Setter Property="Padding" Value="5,8"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="10"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True"><Setter Property="Foreground" Value="{StaticResource Coral}"/><Setter Property="BorderBrush" Value="{StaticResource Coral}"/></Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="TemplateChoice" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource Paper}"/>
+            <Setter Property="Foreground" Value="{StaticResource Plum}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Padding" Value="14,10"/>
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="Button">
+                <Grid>
+                    <Border x:Name="Card" Background="{TemplateBinding Background}" BorderBrush="{StaticResource Line}" BorderThickness="1,0,1,1"/>
+                    <Border Width="5" Background="{StaticResource Coral}" HorizontalAlignment="Left" Margin="0,0,0,1"/>
+                    <Grid Margin="12,0,10,0"><Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="18"/></Grid.ColumnDefinitions>
+                        <ContentPresenter VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="1" Text="↗" Foreground="{StaticResource Coral}" VerticalAlignment="Center"/>
+                    </Grid>
+                </Grid>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Card" Property="Background" Value="#F1EAF7"/></Trigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate></Setter.Value></Setter>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Padding" Value="4,8"/>
+            <Setter Property="Background" Value="{StaticResource Paper}"/>
+            <Setter Property="Foreground" Value="{StaticResource Ink}"/>
+            <Setter Property="CaretBrush" Value="{StaticResource Coral}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource Line}"/>
+            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Style.Triggers><Trigger Property="IsKeyboardFocusWithin" Value="True"><Setter Property="BorderBrush" Value="{StaticResource Coral}"/></Trigger></Style.Triggers>
+        </Style>
+        <Style TargetType="ComboBox">
+            <Setter Property="MinHeight" Value="37"/>
+            <Setter Property="Padding" Value="6,4"/>
+            <Setter Property="Background" Value="{StaticResource Paper}"/>
+            <Setter Property="Foreground" Value="{StaticResource Ink}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource Line}"/>
+            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+        <Style TargetType="ComboBoxItem">
+            <Setter Property="Foreground" Value="{StaticResource Ink}"/>
+            <Setter Property="Background" Value="{StaticResource Paper}"/>
+            <Setter Property="Padding" Value="10,8"/>
+        </Style>
+        <Style TargetType="DataGrid">
+            <Setter Property="Background" Value="{StaticResource Paper}"/>
+            <Setter Property="Foreground" Value="{StaticResource Ink}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="GridLinesVisibility" Value="Horizontal"/>
+            <Setter Property="HorizontalGridLinesBrush" Value="#EAE4EF"/>
+            <Setter Property="RowBackground" Value="White"/>
+            <Setter Property="AlternatingRowBackground" Value="#FBF9FD"/>
+            <Setter Property="RowHeight" Value="44"/>
+            <Setter Property="HeadersVisibility" Value="Column"/>
+        </Style>
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="{StaticResource Paper}"/>
+            <Setter Property="Foreground" Value="{StaticResource Muted}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource Plum}"/>
+            <Setter Property="BorderThickness" Value="0,0,0,2"/>
+            <Setter Property="Padding" Value="9,12"/>
+            <Setter Property="FontSize" Value="9"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+        <Style TargetType="DataGridCell">
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="7,5"/>
+            <Style.Triggers><Trigger Property="IsSelected" Value="True"><Setter Property="Background" Value="#EDE3F4"/><Setter Property="Foreground" Value="{StaticResource Ink}"/></Trigger></Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions><RowDefinition Height="77"/><RowDefinition Height="*"/><RowDefinition Height="34"/></Grid.RowDefinitions>
+
+        <Grid Background="{StaticResource Paper}">
+            <Grid.ColumnDefinitions><ColumnDefinition Width="60"/><ColumnDefinition Width="310"/><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+            <Border Background="{StaticResource Coral}"><TextBlock Text="T" FontFamily="Georgia" FontSize="31" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/></Border>
+            <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="18,0,0,0">
+                <TextBlock Text="TRAVEL READY" FontFamily="Georgia" FontSize="18" FontWeight="Bold" Foreground="{StaticResource Plum}"/>
+                <TextBlock Text="PACKING ATELIER  /  ПОЕЗДКА В ДЕТАЛЯХ" FontSize="8" Foreground="{StaticResource Muted}" Margin="1,4,0,0"/>
+            </StackPanel>
+            <StackPanel Grid.Column="2" VerticalAlignment="Center" Margin="15,0,0,0">
+                <TextBlock Text="План поездки" FontFamily="Georgia" FontSize="17" Foreground="{StaticResource Plum}"/>
+                <TextBlock Text="Маршрут, вещи, готовность и погода — в одном месте" FontSize="10" Foreground="{StaticResource Muted}" Margin="0,3,0,0"/>
+            </StackPanel>
+            <StackPanel Grid.Column="3" Orientation="Horizontal" VerticalAlignment="Center" Margin="8,0,24,0">
+                <StackPanel Margin="0,0,16,0" VerticalAlignment="Center">
+                    <TextBlock Text="ПРОФИЛЬ" Foreground="{StaticResource Muted}" FontSize="8"/>
+                    <TextBlock x:Name="AccountNameText" Foreground="{StaticResource Plum}" FontSize="11" FontWeight="Bold"/>
+                </StackPanel>
+                <Button Content="ОТКРЫТЬ" Click="Open_Click" Style="{StaticResource TextCommand}" Margin="0,0,12,0"/>
+                <Button Content="СОХРАНИТЬ" Click="Save_Click" Style="{StaticResource TextCommand}" Margin="0,0,12,0"/>
+                <Button Content="ЭКСПОРТ" Click="Export_Click" Style="{StaticResource Command}" Background="{StaticResource Plum}" Margin="0,0,12,0"/>
+                <Button Content="ВЫЙТИ" Click="SignOut_Click" Style="{StaticResource TextCommand}"/>
+            </StackPanel>
+            <Border Grid.ColumnSpan="4" Background="{StaticResource Line}" Height="1" VerticalAlignment="Bottom"/>
+        </Grid>
+
+        <Grid x:Name="ContentColumns" Grid.Row="1" Margin="20,17,20,15">
+            <Grid.ColumnDefinitions><ColumnDefinition Width="370"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+
+            <!-- The left page is an itinerary sheet; the packing ledger occupies the facing page. -->
+            <Border Background="{StaticResource Paper}" BorderBrush="{StaticResource Line}" BorderThickness="1" Margin="0,0,16,0">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+                        <Border Background="{StaticResource Plum}" Padding="22,19">
+                            <StackPanel>
+                                <Grid>
+                                    <TextBlock Text="01 / МАРШРУТ" Foreground="#DDCEE9" FontSize="9" FontWeight="Bold"/>
+                                    <TextBlock Text="TR" Foreground="#8B6B9F" FontFamily="Georgia" FontWeight="Bold" FontSize="44" HorizontalAlignment="Right" Margin="0,-14,0,-13"/>
+                                </Grid>
+                                <TextBlock Text="Куда едем?" Foreground="White" FontFamily="Georgia" FontSize="28" Margin="0,3,0,15"/>
+                                <TextBlock Text="НАЗВАНИЕ ПОЕЗДКИ" Foreground="#E3D9EA" FontSize="9"/>
+                                <TextBox x:Name="ProjectNameBox" TextChanged="ProjectField_Changed" FontSize="14" Margin="0,5,0,12"/>
+                                <TextBlock Text="ГОРОДА ПО МАРШРУТУ" Foreground="#E3D9EA" FontSize="9"/>
+                                <TextBox x:Name="CitiesBox" TextChanged="ProjectField_Changed" Margin="0,5,0,11"/>
+                                <Grid>
+                                    <Grid.ColumnDefinitions><ColumnDefinition Width="115"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                                    <StackPanel Margin="0,0,9,0">
+                                        <TextBlock Text="ДНЕЙ" Foreground="#E3D9EA" FontSize="9"/>
+                                        <ComboBox x:Name="DaysBox" SelectedIndex="0" SelectionChanged="ProjectSelection_Changed" Margin="0,5,0,0">
+                                            <ComboBoxItem Content="3"/><ComboBoxItem Content="5"/><ComboBoxItem Content="7"/><ComboBoxItem Content="10"/><ComboBoxItem Content="14"/>
+                                        </ComboBox>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1">
+                                        <TextBlock Text="ФОРМАТ" Foreground="#E3D9EA" FontSize="9"/>
+                                        <ComboBox x:Name="TypeBox" SelectedIndex="0" SelectionChanged="ProjectSelection_Changed" Margin="0,5,0,0">
+                                            <ComboBoxItem Content="городская"/><ComboBoxItem Content="деловая"/><ComboBoxItem Content="смешанная"/><ComboBoxItem Content="активный отдых"/>
+                                        </ComboBox>
+                                    </StackPanel>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+
+                        <StackPanel Margin="22,20,22,8">
+                            <Grid Margin="0,0,0,12">
+                                <TextBlock Text="02 / СБОРЫ" Foreground="{StaticResource Coral}" FontWeight="Bold" FontSize="9"/>
+                                <TextBlock Text="ПОДГОТОВКА" HorizontalAlignment="Right" Foreground="{StaticResource Muted}" FontSize="9"/>
+                            </Grid>
+                            <TextBlock Text="Лимит багажа · кг" Foreground="{StaticResource Muted}" FontSize="10"/>
+                            <TextBox x:Name="LimitBox" Text="10" TextChanged="ProjectField_Changed" FontSize="15" FontWeight="Bold" Margin="0,4,0,11"/>
+                            <Button Content="ОБНОВИТЬ ПЛАН" Click="Generate_Click" Style="{StaticResource Command}" Background="{StaticResource Coral}" Margin="0,0,0,6"/>
+                            <Button Content="РАСПРЕДЕЛИТЬ ВЕС ↗" Click="BalanceWeight_Click" Style="{StaticResource TextCommand}" HorizontalAlignment="Stretch"/>
+                            <TextBlock x:Name="BalanceStatusText" Text="Баланс багажа · ожидает" Foreground="{StaticResource Muted}" FontSize="9" Margin="1,6,0,14" TextWrapping="Wrap"/>
+                            <TextBlock Text="Начать с шаблона" FontFamily="Georgia" FontSize="16" Foreground="{StaticResource Plum}" Margin="0,0,0,8"/>
+                            <Button Content="Городская поездка" Click="Template_Click" Tag="city" Style="{StaticResource TemplateChoice}" Height="37"/>
+                            <Button Content="Деловая поездка" Click="Template_Click" Tag="business" Style="{StaticResource TemplateChoice}" Height="37"/>
+                            <Button Content="Активный отдых" Click="Template_Click" Tag="active" Style="{StaticResource TemplateChoice}" Height="37"/>
+                            <TextBlock Text="ПАССАЖИР" Foreground="{StaticResource Muted}" FontSize="9" Margin="0,15,0,5"/>
+                            <ComboBox x:Name="PersonFilter" SelectedIndex="0" SelectionChanged="Filter_Changed">
+                                <ComboBoxItem Content="Все пассажиры"/><ComboBoxItem Content="Общее"/><ComboBoxItem Content="Студент"/><ComboBoxItem Content="Сопровождающий"/>
+                            </ComboBox>
+                            <TextBlock x:Name="ValidationText" Foreground="{StaticResource Coral}" TextWrapping="Wrap" Margin="0,10,0,0"/>
+                        </StackPanel>
+
+                        <Border x:Name="ReadinessPanel" Background="{StaticResource Snow}" Padding="22,17" Margin="0,16,0,0">
+                            <StackPanel>
+                                <Grid Margin="0,0,0,10"><TextBlock Text="03 / ПРОВЕРКА" Foreground="{StaticResource Coral}" FontWeight="Bold" FontSize="9"/><TextBlock Text="ГОТОВНОСТЬ" HorizontalAlignment="Right" Foreground="{StaticResource Muted}" FontSize="9"/></Grid>
+                                <Grid><Grid.ColumnDefinitions><ColumnDefinition Width="85"/><ColumnDefinition/></Grid.ColumnDefinitions>
+                                    <Grid Width="76" Height="76">
+                                        <Ellipse Stroke="{StaticResource Line}" StrokeThickness="6"/>
+                                        <Ellipse Stroke="{StaticResource Coral}" StrokeThickness="2" Margin="7"/>
+                                        <TextBlock x:Name="ReadyPercentText" Text="0%" FontFamily="Georgia" FontSize="20" FontWeight="Bold" Foreground="{StaticResource Plum}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Grid>
+                                    <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="10,0,0,0">
+                                        <TextBlock Text="Перед выходом" FontFamily="Georgia" FontSize="17" Foreground="{StaticResource Plum}"/>
+                                        <TextBlock x:Name="ReadinessSummaryText" Text="— собрано · — купить" Foreground="{StaticResource Muted}" FontSize="10" Margin="0,5,0,8" TextWrapping="Wrap"/>
+                                        <ProgressBar x:Name="ReadyBar" Height="5" Maximum="100" Foreground="{StaticResource Coral}" Background="{StaticResource Line}"/>
+                                    </StackPanel>
+                                </Grid>
+                                <Grid Margin="0,15,0,0"><Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition/></Grid.ColumnDefinitions>
+                                    <StackPanel><TextBlock Text="ВЕС" Foreground="{StaticResource Muted}" FontSize="9"/><TextBlock x:Name="WeightText" Text="0,0 кг" FontFamily="Georgia" FontSize="20" Foreground="{StaticResource Plum}"/><TextBlock x:Name="WeightLimitText" Text="лимит 10 кг" Foreground="{StaticResource Muted}" FontSize="9"/></StackPanel>
+                                    <StackPanel Grid.Column="1"><TextBlock Text="НЕ СОБРАНО" Foreground="{StaticResource Muted}" FontSize="9"/><TextBlock x:Name="MissingText" Text="0" FontFamily="Georgia" FontSize="20" Foreground="{StaticResource Coral}"/><TextBlock Text="важных пунктов" Foreground="{StaticResource Muted}" FontSize="9"/></StackPanel>
+                                </Grid>
+                                <Border Height="1" Background="{StaticResource Line}" Margin="0,15,0,11"/>
+                                <TextBlock Text="Багаж по пассажирам" FontFamily="Georgia" FontSize="15" Foreground="{StaticResource Plum}" Margin="0,0,0,8"/>
+                                <StackPanel x:Name="PeopleLoadPanel"/>
+                                <Grid Margin="0,18,0,7"><TextBlock Text="Погода по маршруту" FontFamily="Georgia" FontSize="15" Foreground="{StaticResource Plum}"/><Button Content="КЛЮЧ API" Click="WeatherSettings_Click" Style="{StaticResource TextCommand}" FontSize="8" HorizontalAlignment="Right" Padding="2,1"/></Grid>
+                                <StackPanel x:Name="WeatherPanel"/>
+                                <Button x:Name="WeatherButton" Content="ОБНОВИТЬ ПРОГНОЗ" Click="Weather_Click" Style="{StaticResource Command}" Background="{StaticResource Plum}" Margin="0,6,0,0"/>
+                                <TextBlock Text="Требует внимания" FontFamily="Georgia" FontSize="15" Foreground="{StaticResource Plum}" Margin="0,18,0,7"/>
+                                <StackPanel x:Name="RiskPanel"/>
+                                <TextBlock Text="По разделам" FontFamily="Georgia" FontSize="15" Foreground="{StaticResource Plum}" Margin="0,17,0,7"/>
+                                <StackPanel x:Name="CategoryProgressPanel"/>
+                            </StackPanel>
+                        </Border>
+                        <StackPanel Margin="22,17,22,20">
+                            <TextBlock x:Name="SidebarAccountName" Foreground="{StaticResource Plum}" FontWeight="Bold" FontSize="11"/>
+                            <TextBlock x:Name="SidebarEmailText" Foreground="{StaticResource Muted}" FontSize="10" Margin="0,4,0,0"/>
+                            <TextBlock Text="Изменения сохраняются автоматически" Foreground="{StaticResource Muted}" FontSize="9" Margin="0,7,0,0"/>
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions><RowDefinition Height="121"/><RowDefinition Height="67"/><RowDefinition Height="*"/><RowDefinition Height="31"/></Grid.RowDefinitions>
+                <Border Background="{StaticResource Lilac}" Padding="24,15" Margin="0,0,0,12">
+                    <Grid><Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock Text="THE PACKING LIST  /  ВЕЩИ" Foreground="{StaticResource Coral}" FontSize="9" FontWeight="Bold"/>
+                            <TextBlock x:Name="WorkspaceTitle" Text="Новая поездка" FontFamily="Georgia" FontSize="27" FontWeight="Bold" Foreground="{StaticResource Plum}" Margin="0,5,0,0"/>
+                            <TextBlock x:Name="WorkspaceSubtitle" Text="Задайте маршрут и выберите шаблон сборов" Foreground="{StaticResource Muted}" FontSize="10" Margin="0,4,0,0"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Bottom" Margin="12,0,0,2">
+                            <Button Content="+ ВЕЩЬ" Click="AddItem_Click" Style="{StaticResource Command}" Background="{StaticResource Coral}" Margin="0,0,8,0"/>
+                            <Button Content="УДАЛИТЬ" Click="DeleteItem_Click" Style="{StaticResource TextCommand}"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+                <Grid Grid.Row="1" Margin="0,3,0,11"><Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="155"/><ColumnDefinition Width="155"/></Grid.ColumnDefinitions>
+                    <Grid Margin="0,0,13,0">
+                        <TextBox x:Name="SearchBox" TextChanged="SearchBox_TextChanged" ToolTip="Поиск по вещам" Padding="32,8,4,8" FontSize="12"/>
+                        <TextBlock Text="⌕" Foreground="{StaticResource Coral}" FontSize="19" Margin="9,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" IsHitTestVisible="False"/>
+                    </Grid>
+                    <ComboBox x:Name="CategoryFilter" Grid.Column="1" SelectedIndex="0" SelectionChanged="Filter_Changed" Margin="0,0,8,0">
+                        <ComboBoxItem Content="Все категории"/><ComboBoxItem Content="Документы"/><ComboBoxItem Content="Одежда"/><ComboBoxItem Content="Техника"/><ComboBoxItem Content="Здоровье"/><ComboBoxItem Content="По погоде"/>
+                    </ComboBox>
+                    <ComboBox x:Name="StatusFilter" Grid.Column="2" SelectedIndex="0" SelectionChanged="Filter_Changed">
+                        <ComboBoxItem Content="Все статусы"/><ComboBoxItem Content="Не готово"/><ComboBoxItem Content="Уложено"/><ComboBoxItem Content="Купить"/><ComboBoxItem Content="Постирать"/>
+                    </ComboBox>
+                </Grid>
+                <Border Grid.Row="2" Background="{StaticResource Paper}" BorderBrush="{StaticResource Line}" BorderThickness="1" Padding="10,4,10,10">
+                    <DataGrid x:Name="ItemsGrid" AutoGenerateColumns="False" CanUserAddRows="False"
+                              SelectionMode="Single" CellEditEnding="ItemsGrid_CellEditEnding">
+                        <DataGrid.Columns>
+                            <DataGridCheckBoxColumn Header="ВАЖНО" Binding="{Binding Required}" Width="62"/>
+                            <DataGridTextColumn Header="ВЕЩЬ" Binding="{Binding Name}" Width="2*"/>
+                            <DataGridTextColumn Header="РАЗДЕЛ" Binding="{Binding Category}" Width="105"/>
+                            <DataGridTextColumn Header="ПАССАЖИР" Binding="{Binding Person}" Width="100"/>
+                            <DataGridTextColumn Header="ШТ." Binding="{Binding Quantity}" Width="55"/>
+                            <DataGridTextColumn Header="ВЕС" Binding="{Binding UnitWeight, StringFormat=0.00}" Width="65"/>
+                            <DataGridTextColumn Header="СОСТОЯНИЕ" Binding="{Binding Status}" Width="100"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Border>
+                <Grid Grid.Row="3" Margin="4,8,4,0">
+                    <TextBlock Text="PACKING ATELIER   /   СПИСОК МОЖНО РЕДАКТИРОВАТЬ ПРЯМО В ТАБЛИЦЕ" Foreground="{StaticResource Muted}" FontSize="9"/>
+                    <TextBlock Text="●  АВТОСОХРАНЕНИЕ" Foreground="{StaticResource Coral}" FontSize="9" FontWeight="Bold" HorizontalAlignment="Right"/>
+                </Grid>
+            </Grid>
+        </Grid>
+
+        <Border Grid.Row="2" Background="{StaticResource Plum}">
+            <Grid Margin="22,0">
+                <TextBlock Text="TRAVEL READY   /   ЛИЧНЫЙ ПЛАН ПОДГОТОВКИ" Foreground="#DDD4E6" FontSize="8" VerticalAlignment="Center"/>
+                <TextBlock x:Name="FooterText" Text="ЛОКАЛЬНЫЙ РЕЖИМ" Foreground="White" FontSize="9" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

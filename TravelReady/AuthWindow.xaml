@@ -1,0 +1,47 @@
+<Window x:Class="TravelReady.AuthWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Travel Ready · доступ к поездкам" Width="540" Height="750" MinWidth="500" MinHeight="680"
+        ResizeMode="CanResize" WindowStartupLocation="CenterScreen" Background="#F4F1F8" FontFamily="Arial">
+    <Window.Resources>
+        <SolidColorBrush x:Key="Forest" Color="#3D294D"/><SolidColorBrush x:Key="Clay" Color="#D84C68"/>
+        <SolidColorBrush x:Key="Ink" Color="#30263A"/><SolidColorBrush x:Key="Muted" Color="#71677A"/>
+        <SolidColorBrush x:Key="Paper" Color="#FFFFFF"/><SolidColorBrush x:Key="Line" Color="#DDD5E2"/>
+        <Style TargetType="TextBlock"><Setter Property="Foreground" Value="{StaticResource Ink}"/></Style>
+        <Style TargetType="TextBox"><Setter Property="Padding" Value="12,10"/><Setter Property="Margin" Value="0,6,0,14"/><Setter Property="Background" Value="{StaticResource Paper}"/><Setter Property="Foreground" Value="{StaticResource Ink}"/><Setter Property="BorderBrush" Value="{StaticResource Line}"/><Setter Property="CaretBrush" Value="{StaticResource Clay}"/><Setter Property="FontSize" Value="14"/><Setter Property="VerticalContentAlignment" Value="Center"/></Style>
+        <Style TargetType="PasswordBox"><Setter Property="Padding" Value="12,10"/><Setter Property="Margin" Value="0,6,0,14"/><Setter Property="Background" Value="{StaticResource Paper}"/><Setter Property="Foreground" Value="{StaticResource Ink}"/><Setter Property="BorderBrush" Value="{StaticResource Line}"/><Setter Property="CaretBrush" Value="{StaticResource Clay}"/><Setter Property="FontSize" Value="14"/></Style>
+        <Style x:Key="Primary" TargetType="Button"><Setter Property="Background" Value="{StaticResource Forest}"/><Setter Property="Foreground" Value="White"/><Setter Property="BorderThickness" Value="0"/><Setter Property="Padding" Value="20,13"/><Setter Property="FontWeight" Value="Bold"/><Setter Property="Cursor" Value="Hand"/><Setter Property="Template"><Setter.Value><ControlTemplate TargetType="Button"><Grid><Border x:Name="ActionSurface" Background="{TemplateBinding Background}"/><ContentPresenter Margin="{TemplateBinding Padding}" HorizontalAlignment="Center" VerticalAlignment="Center"/></Grid><ControlTemplate.Triggers><Trigger Property="IsMouseOver" Value="True"><Setter TargetName="ActionSurface" Property="Opacity" Value="0.82"/></Trigger></ControlTemplate.Triggers></ControlTemplate></Setter.Value></Setter></Style>
+    </Window.Resources>
+
+    <Grid Margin="30,24"><Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+        <StackPanel>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <Border Width="44" Height="44" Background="{StaticResource Clay}"><TextBlock Text="T" FontFamily="Georgia" FontSize="29" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/></Border>
+                <StackPanel Margin="12,0"><TextBlock Text="TRAVEL READY" FontFamily="Georgia" FontSize="18" FontWeight="Bold" Foreground="{StaticResource Forest}"/><TextBlock Text="PACKING ATELIER / ПОЕЗДКА В ДЕТАЛЯХ" FontSize="9" Foreground="{StaticResource Muted}"/></StackPanel>
+            </StackPanel>
+            <TextBlock Text="Собирайтесь спокойно." FontSize="27" FontWeight="Bold" FontFamily="Georgia" Margin="0,24,0,4"/>
+            <TextBlock Text="Ваш маршрут и вещи будут готовы тогда, когда нужны." Foreground="{StaticResource Muted}" TextWrapping="Wrap"/>
+        </StackPanel>
+
+        <Border Grid.Row="1" Background="{StaticResource Paper}" BorderBrush="{StaticResource Line}" BorderThickness="1" CornerRadius="0" Padding="24" Margin="0,20,0,16">
+            <ScrollViewer VerticalScrollBarVisibility="Auto"><StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,18">
+                    <Button x:Name="SignInTab" Content="ВОЙТИ" Click="SignInTab_Click" Background="{StaticResource Forest}" Foreground="White" Padding="16,9" BorderThickness="0" Margin="0,0,8,0"/>
+                    <Button x:Name="RegisterTab" Content="СОЗДАТЬ ПРОФИЛЬ" Click="RegisterTab_Click" Background="#F4F1F8" Foreground="{StaticResource Muted}" Padding="16,9" BorderThickness="0"/>
+                </StackPanel>
+                <TextBlock Text="ЭЛЕКТРОННАЯ ПОЧТА" Foreground="{StaticResource Muted}" FontSize="10"/><TextBox x:Name="EmailBox" Text=""/>
+                <StackPanel x:Name="DisplayNameField"><TextBlock Text="ИМЯ В ПУТЕВОМ ЖУРНАЛЕ" Foreground="{StaticResource Muted}" FontSize="10"/><TextBox x:Name="DisplayNameBox" Text="" Margin="0,6,0,14"/></StackPanel>
+                <StackPanel x:Name="PasswordField"><TextBlock Text="ПАРОЛЬ" Foreground="{StaticResource Muted}" FontSize="10"/><PasswordBox x:Name="PasswordBox"/></StackPanel>
+                <StackPanel x:Name="ConfirmPasswordField"><TextBlock Text="ПОВТОРИТЕ ПАРОЛЬ" Foreground="{StaticResource Muted}" FontSize="10"/><PasswordBox x:Name="ConfirmPasswordBox"/></StackPanel>
+                <StackPanel x:Name="VerificationField" Visibility="Collapsed"><TextBlock Text="КОД ИЗ ПИСЬМА" Foreground="{StaticResource Muted}" FontSize="10"/><TextBox x:Name="VerificationCodeBox" MaxLength="16" Margin="0,6,0,8"/><TextBlock Text="Код действует 10 минут. Проверьте папку «Спам», если письма нет." Foreground="{StaticResource Muted}" FontSize="10" TextWrapping="Wrap"/></StackPanel>
+                <TextBlock x:Name="FeedbackText" Foreground="{StaticResource Clay}" TextWrapping="Wrap" MinHeight="42" Margin="0,2,0,8"/>
+                <Button x:Name="ContinueButton" Content="ОТКРЫТЬ ПУТЕВОЙ ЖУРНАЛ  →" Click="Continue_Click" Style="{StaticResource Primary}" HorizontalAlignment="Stretch"/>
+                <Button x:Name="ResendResetButton" Content="ЗАПРОСИТЬ НОВЫЙ КОД" Click="ResendReset_Click" Visibility="Collapsed" Margin="0,10,0,0" Padding="10,8" Background="#F4F1F8" Foreground="{StaticResource Forest}" BorderThickness="0"/>
+                <Button x:Name="ResetPasswordButton" Content="ЗАБЫЛИ ПАРОЛЬ?" Click="ResetPassword_Click" Margin="0,10,0,0" Padding="10,8" Background="#F4F1F8" Foreground="{StaticResource Forest}" BorderThickness="0"/>
+                <Button Content="НАСТРОИТЬ ПОЧТУ / MAIL API" Click="MailSettings_Click" Margin="0,10,0,0" Padding="10,8" Background="#F4F1F8" Foreground="{StaticResource Forest}" BorderThickness="0"/>
+                <TextBlock Text="Коды из писем используются только для подтверждения доступа к профилю." Foreground="{StaticResource Muted}" FontSize="10" TextWrapping="Wrap" Margin="0,10,0,0"/>
+            </StackPanel></ScrollViewer>
+        </Border>
+        <TextBlock Grid.Row="2" Text="ВАШИ МАРШРУТЫ · ВАШИ ПЛАНЫ · ВАШЕ УСТРОЙСТВО" Foreground="{StaticResource Muted}" FontSize="9" HorizontalAlignment="Center"/>
+    </Grid>
+</Window>
